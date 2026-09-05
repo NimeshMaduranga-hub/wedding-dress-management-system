@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wedding Dress</title>
+
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+
+    <div class="logo">
+        Wedding Dress
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/dresses">Dresses</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+    </div>
+
+</nav>
+
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            YOUR SPECIAL DAY
+        </p>
+
+        <h1>
+            Find Your Perfect
+            <br>
+            Wedding Dress
+        </h1>
+
+        <p class="hero-text">
+            Discover beautiful wedding dresses
+            designed to make your special day unforgettable.
+        </p>
+
+        <a href="/dresses" class="hero-button">
+            Browse Dresses
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- Welcome Section -->
+<section class="welcome-section">
+
+    <h2>
+        Welcome, <span id="username"></span>
+    </h2>
+
+    <p>
+        Explore our beautiful collection of wedding dresses.
+    </p>
+
+</section>
+
+
+<!-- Footer -->
+<footer>
+
+    <p>
+        © 2026 Wedding Dress System
+    </p>
+
+</footer>
+
+
+<script>
+
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
+    // If user is not logged in
+    if (!token) {
+        window.location.href = "/login";
+    }
+
+    // Display username
+    document.getElementById("username").textContent =
+        username || "User";
+
+
+    // Logout
+    document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+
+            window.location.href = "/login";
+
+        });
+
+</script>
+
+</body>
+
+</html>

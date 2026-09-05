@@ -1,0 +1,251 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+    color: #333;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 60px;
+
+    background: white;
+
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #777;
+}
+
+#userInfo {
+    font-size: 14px;
+    color: #777;
+}
+
+#logoutBtn {
+    padding: 9px 18px;
+
+    border: none;
+    border-radius: 5px;
+
+    background: #222;
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* DRESS SECTION */
+
+.dress-section {
+    padding: 70px 60px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.small-title {
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    color: #888;
+
+    margin-bottom: 15px;
+}
+
+.section-header h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.section-header p:last-child {
+    color: #777;
+}
+
+
+/* DRESS CARDS */
+
+.dress-container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 30px;
+}
+
+.dress-card {
+    background: white;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.2s;
+}
+
+.dress-card:hover {
+    transform: translateY(-5px);
+}
+
+.dress-image {
+    width: 100%;
+
+    height: 350px;
+
+    object-fit: cover;
+
+    background: #eee;
+}
+
+.dress-info {
+    padding: 25px;
+}
+
+.dress-info h2 {
+    margin-bottom: 10px;
+
+    font-size: 22px;
+}
+
+.description {
+    color: #777;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.details {
+    color: #666;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.available {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    font-size: 13px;
+}
+
+.unavailable {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #ffebee;
+
+    color: #c62828;
+
+    font-size: 13px;
+}
+
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+
+    padding: 25px;
+
+    background: #222;
+
+    color: white;
+
+    margin-top: 50px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .dress-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links a {
+        display: none;
+    }
+
+    .dress-section {
+        padding: 50px 20px;
+    }
+
+    .dress-container {
+        grid-template-columns: 1fr;
+    }
+
+}

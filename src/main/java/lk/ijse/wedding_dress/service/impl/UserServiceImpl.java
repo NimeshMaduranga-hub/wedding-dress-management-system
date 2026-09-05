@@ -8,12 +8,17 @@ import lk.ijse.wedding_dress.repository.UserRepository;
 import lk.ijse.wedding_dress.security.JwtUtil;
 import lk.ijse.wedding_dress.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -22,10 +27,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(RegisterDTO registerDTO) {
 
+        logger.info(
+                "Registering new user: {}",
+                registerDTO.getUsername()
+        );
+
         // Check username already exists
         if (userRepository
                 .findByUsername(registerDTO.getUsername())
                 .isPresent()) {
+
+            logger.warn(
+                    "Registration failed. Username already exists: {}",
+                    registerDTO.getUsername()
+            );
 
             throw new RuntimeException("Username already exists");
         }
@@ -49,24 +64,45 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
 
         userRepository.save(user);
+
+        logger.info(
+                "User registered successfully: {}",
+                user.getUsername()
+        );
     }
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
 
+        logger.info(
+                "Login attempt for user: {}",
+                loginRequestDTO.getUsername()
+        );
+
         // Find user by username
         User user = userRepository
                 .findByUsername(loginRequestDTO.getUsername())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Invalid username or password"
-                        )
-                );
+                .orElseThrow(() -> {
+
+                    logger.warn(
+                            "Login failed. User not found: {}",
+                            loginRequestDTO.getUsername()
+                    );
+
+                    return new RuntimeException(
+                            "Invalid username or password"
+                    );
+                });
 
         // Check password
         if (!passwordEncoder.matches(
                 loginRequestDTO.getPassword(),
                 user.getPassword())) {
+
+            logger.warn(
+                    "Login failed. Invalid password for user: {}",
+                    loginRequestDTO.getUsername()
+            );
 
             throw new RuntimeException(
                     "Invalid username or password"
@@ -77,6 +113,11 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtil.generateToken(
                 user.getUsername(),
                 user.getRole()
+        );
+
+        logger.info(
+                "User logged in successfully: {}",
+                user.getUsername()
         );
 
         return new LoginResponseDTO(

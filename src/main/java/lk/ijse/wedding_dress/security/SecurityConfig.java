@@ -1,5 +1,6 @@
 package lk.ijse.wedding_dress.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.MediaType;
 
 @Configuration
 @EnableMethodSecurity
@@ -93,7 +95,9 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/",
                                 "/login",
-                                "/register"
+                                "/register",
+                                "/dresses",
+                                "/favicon.ico"
                         ).permitAll()
 
 
@@ -116,8 +120,23 @@ public class SecurityConfig {
                         // =====================================
                         .anyRequest()
                         .authenticated()
-                )
 
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+                            response.getWriter().write("""
+                    {
+                        "status": 1,
+                        "body": null,
+                        "message": "Authentication required"
+                    }
+                    """);
+                        })
+                )
 
                 // Authentication Provider
                 .authenticationProvider(

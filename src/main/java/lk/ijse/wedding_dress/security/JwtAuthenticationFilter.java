@@ -44,11 +44,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
+            System.out.println("JWT HEADER FOUND");
+
             // Check JWT validity
             if (!jwtUtil.isTokenValid(jwtToken)) {
+
+                System.out.println("JWT TOKEN INVALID");
+
                 filterChain.doFilter(request, response);
                 return;
             }
+
+            System.out.println("JWT TOKEN VALID");
 
             // Get username from JWT
             String username =
@@ -63,6 +70,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UserDetails userDetails =
                         userDetailsService
                                 .loadUserByUsername(username);
+
+                System.out.println(
+                        "JWT Username: " + username
+                );
+
+                System.out.println(
+                        "JWT Authorities: "
+                                + userDetails.getAuthorities()
+                );
 
                 // Check account is enabled
                 if (userDetails.isEnabled()) {
@@ -82,12 +98,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder
                             .getContext()
                             .setAuthentication(authentication);
+
+                    System.out.println(
+                            "JWT AUTHENTICATION SET"
+                    );
                 }
             }
 
         } catch (Exception e) {
 
-            // Invalid JWT
+            System.out.println(
+                    "JWT ERROR: "
+                            + e.getClass().getSimpleName()
+            );
+
+            System.out.println(
+                    "JWT ERROR MESSAGE: "
+                            + e.getMessage()
+            );
+
             SecurityContextHolder.clearContext();
         }
 

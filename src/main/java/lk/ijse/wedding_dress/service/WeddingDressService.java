@@ -14,5 +14,7 @@ public interface WeddingDressService {
 
     WeddingDress updateDress(Long id, WeddingDress weddingDress);
 
+    WeddingDress patchDress(Long id, WeddingDress weddingDress);
+
     void deleteDress(Long id);
 }

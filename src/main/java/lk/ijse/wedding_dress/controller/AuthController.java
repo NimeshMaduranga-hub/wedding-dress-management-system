@@ -13,11 +13,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(AuthController.class);
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
@@ -33,6 +39,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
             @RequestBody LoginRequest request) {
+
+        logger.info("Login attempt for user: {}", request.getUsername());
 
         Authentication authentication =
                 authenticationManager.authenticate(
@@ -54,6 +62,8 @@ public class AuthController {
                 username,
                 role
         );
+
+        logger.info("User logged in successfully: {}", username);
 
         return ResponseEntity.ok(
                 new LoginResponseDTO(
