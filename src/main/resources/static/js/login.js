@@ -33,6 +33,9 @@ document
 
             const data = await response.json();
 
+            console.log("LOGIN RESPONSE:", data);
+            console.log("ROLE:", data.role);
+
             if (response.ok) {
 
                 // Save JWT information
@@ -59,7 +62,6 @@ document
 
                 message.textContent =
                     data.message || "Login failed.";
-
             }
 
         } catch (error) {

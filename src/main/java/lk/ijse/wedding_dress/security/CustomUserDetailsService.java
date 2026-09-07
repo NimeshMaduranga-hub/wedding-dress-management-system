@@ -3,18 +3,17 @@ package lk.ijse.wedding_dress.security;
 import lk.ijse.wedding_dress.entity.User;
 import lk.ijse.wedding_dress.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService
+        implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -30,20 +29,26 @@ public class CustomUserDetailsService implements UserDetailsService {
                         )
                 );
 
-        String roles = user.getRole();
+        String role = user.getRole();
 
-        List<SimpleGrantedAuthority> authorities =
-                Arrays.stream(roles.split(","))
-                        .map(String::trim)
-                        .map(role -> role.replace("ROLE_", ""))
-                        .map(SimpleGrantedAuthority::new)
-                        .toList();
+        /*
+         * Fallback to normalized role relationship.
+         */
+        if (role == null && user.getRoleEntity() != null) {
+            role = user.getRoleEntity().getName();
+        }
+
+        if (role == null) {
+            role = "USER";
+        }
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(authorities)
-                .disabled(!user.isEnabled())
+                .authorities(
+                        new SimpleGrantedAuthority(role)
+                )
+                .disabled(!user.getEnabled())
                 .build();
     }
 }

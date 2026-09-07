@@ -1,10 +1,8 @@
 package lk.ijse.wedding_dress.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 @Entity
 @Table(name = "users")
@@ -28,8 +26,20 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    private Boolean enabled;
+
+    /*
+     * Temporary compatibility column.
+     * Current JWT/security code uses this value.
+     * We will remove it after the complete migration.
+     */
+    @Column(name = "role")
     private String role;
 
-    @Column(nullable = false)
-    private boolean enabled;
+    /*
+     * Normalized role relationship.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role roleEntity;
 }

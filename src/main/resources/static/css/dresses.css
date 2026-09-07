@@ -1,20 +1,23 @@
-* {
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f8f8f8;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f5f3;
     color: #333;
+    min-height: 100vh;
 }
 
-
-/* NAVBAR */
+/* =========================
+NAVBAR
+========================= */
 
 .navbar {
-    height: 70px;
+    width: 100%;
+    min-height: 70px;
 
     display: flex;
     align-items: center;
@@ -22,230 +25,444 @@ body {
 
     padding: 0 60px;
 
-    background: white;
+    background: #ffffff;
 
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e8e2df;
+
+    box-shadow:
+            0 2px 8px rgba(0, 0, 0, 0.04);
+
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: 700;
+
+    color: #8b5e5e;
+
+    letter-spacing: 0.5px;
+
 }
 
 .nav-links {
     display: flex;
     align-items: center;
+
     gap: 25px;
+
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #333;
+
+    color: #555;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: 0.3s;
+
 }
 
-.nav-links a:hover {
-    color: #777;
+.nav-links a {
+    color: #8b5e5e;
 }
 
 #userInfo {
     font-size: 14px;
-    color: #777;
+
+    color: #8b5e5e;
+
+    font-weight: 600;
+
 }
 
 #logoutBtn {
-    padding: 9px 18px;
-
     border: none;
-    border-radius: 5px;
 
-    background: #222;
-    color: white;
+    padding: 10px 20px;
+
+    border-radius: 6px;
+
+    background: #8b5e5e;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
 
     cursor: pointer;
+
+    transition: 0.3s;
+
 }
 
+#logoutBtn {
+    background: #704848;
 
-/* DRESS SECTION */
+    transform: translateY(-1px);
+
+}
+
+/* =========================
+DRESS SECTION
+========================= */
 
 .dress-section {
-    padding: 70px 60px;
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 50px auto;
+
+    padding-bottom: 50px;
+
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 50px;
+
+    margin-bottom: 45px;
+
 }
 
 .small-title {
     font-size: 13px;
 
-    letter-spacing: 4px;
+    font-weight: 700;
 
-    color: #888;
+    letter-spacing: 3px;
 
-    margin-bottom: 15px;
+    color: #a77a7a;
+
+    margin-bottom: 10px;
+
 }
 
 .section-header h1 {
-    font-size: 42px;
-    margin-bottom: 15px;
+    font-size: 40px;
+
+    color: #3f3030;
+
+    margin-bottom: 12px;
+
 }
 
-.section-header p:last-child {
+.section-header p {
     color: #777;
+
+    font-size: 16px;
+
 }
 
-
-/* DRESS CARDS */
+/* =========================
+DRESS CONTAINER
+========================= */
 
 .dress-container {
-    max-width: 1200px;
-
-    margin: auto;
-
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+    repeat(3, 1fr);
 
     gap: 30px;
+
 }
 
-.dress-card {
-    background: white;
+/* =========================
+DRESS CARD
+========================= */
 
-    border-radius: 10px;
+.dress-card {
+    background: #ffffff;
+
+    border-radius: 12px;
 
     overflow: hidden;
 
+    border: 1px solid #eee6e3;
+
     box-shadow:
-            0 5px 20px rgba(0, 0, 0, 0.08);
+            0 5px 20px rgba(0, 0, 0, 0.06);
 
-    transition: transform 0.2s;
+    transition:
+            transform 0.3s,
+            box-shadow 0.3s;
+
 }
 
-.dress-card:hover {
-    transform: translateY(-5px);
+.dress-card {
+    transform: translateY(-6px);
+
+    box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.10);
+
 }
+
+/* =========================
+DRESS IMAGE
+========================= */
 
 .dress-image {
     width: 100%;
 
-    height: 350px;
+    height: 360px;
+
+    display: block;
 
     object-fit: cover;
 
-    background: #eee;
+    background: #f1eeee;
+
 }
+
+/* =========================
+DRESS INFO
+========================= */
 
 .dress-info {
     padding: 25px;
 }
 
 .dress-info h2 {
-    margin-bottom: 10px;
-
     font-size: 22px;
+
+    color: #4b3737;
+
+    margin-bottom: 12px;
+
 }
 
 .description {
     color: #777;
 
-    line-height: 1.5;
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    min-height: 45px;
 
     margin-bottom: 15px;
+
 }
 
 .price {
-    font-size: 20px;
+    font-size: 21px;
 
-    font-weight: bold;
+    font-weight: 700;
 
-    margin-bottom: 10px;
+    color: #8b5e5e;
+
+    margin-bottom: 15px;
+
 }
+
+/* =========================
+DETAILS
+========================= */
 
 .details {
-    color: #666;
-
-    font-size: 14px;
-
-    line-height: 1.7;
+    margin-bottom: 15px;
 }
 
-.available {
+.details p {
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    color: #666;
+
+}
+
+.details strong {
+    color: #444;
+}
+
+/* =========================
+AVAILABILITY
+========================= */
+
+.available,
+.unavailable {
     display: inline-block;
 
-    margin-top: 15px;
-
-    padding: 6px 12px;
+    padding: 7px 14px;
 
     border-radius: 20px;
 
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+.available {
     background: #e8f5e9;
 
     color: #2e7d32;
 
-    font-size: 13px;
 }
 
 .unavailable {
-    display: inline-block;
-
-    margin-top: 15px;
-
-    padding: 6px 12px;
-
-    border-radius: 20px;
-
     background: #ffebee;
 
     color: #c62828;
 
-    font-size: 13px;
 }
 
+/* =========================
+LOADING / EMPTY / ERROR
+========================= */
 
-/* FOOTER */
+.loading-box,
+.empty-box,
+.error-box {
+    grid-column: 1 / -1;
+
+    padding: 35px;
+
+    text-align: center;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+}
+
+.loading-box {
+    background: #ffffff;
+
+    color: #777;
+
+}
+
+.empty-box {
+    background: #ffffff;
+
+    color: #777;
+
+    border: 1px solid #eee6e3;
+
+}
+
+.error-box {
+    background: #ffebee;
+
+    color: #c62828;
+
+    border: 1px solid #ffcdd2;
+
+}
+
+/* =========================
+FOOTER
+========================= */
 
 footer {
-    text-align: center;
+    width: 100%;
 
     padding: 25px;
 
-    background: #222;
+    text-align: center;
 
-    color: white;
+    background: #ffffff;
 
-    margin-top: 50px;
+    border-top: 1px solid #e8e2df;
+
+    color: #888;
+
+    font-size: 13px;
+
 }
 
-
-/* RESPONSIVE */
+/* =========================
+RESPONSIVE
+========================= */
 
 @media (max-width: 900px) {
 
+    .navbar {
+        padding: 0 30px;
+    }
+
     .dress-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+        repeat(2, 1fr);
+    }
+
+    .dress-image {
+        height: 330px;
     }
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
     .navbar {
-        padding: 0 20px;
+        min-height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
     }
 
-    .nav-links a {
-        display: none;
+    .nav-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 15px;
     }
 
     .dress-section {
-        padding: 50px 20px;
+        width: 94%;
+
+        margin: 35px auto;
+    }
+
+    .section-header h1 {
+        font-size: 30px;
     }
 
     .dress-container {
         grid-template-columns: 1fr;
+    }
+
+    .dress-image {
+        height: 350px;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .section-header h1 {
+        font-size: 26px;
+    }
+
+    .nav-links {
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    #userInfo {
+        font-size: 12px;
+    }
+
+    #logoutBtn {
+        padding: 8px 14px;
+    }
+
+    .dress-info {
+        padding: 20px;
+    }
+
+    .dress-image {
+        height: 300px;
     }
 
 }

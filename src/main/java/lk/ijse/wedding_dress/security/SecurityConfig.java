@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -14,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.http.MediaType;
 
 @Configuration
 @EnableMethodSecurity
@@ -28,6 +28,7 @@ public class SecurityConfig {
     // =========================================================
     // PASSWORD ENCODER
     // =========================================================
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,6 +38,7 @@ public class SecurityConfig {
     // =========================================================
     // AUTHENTICATION PROVIDER
     // =========================================================
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
 
@@ -52,6 +54,7 @@ public class SecurityConfig {
     // =========================================================
     // AUTHENTICATION MANAGER
     // =========================================================
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration)
@@ -64,17 +67,18 @@ public class SecurityConfig {
     // =========================================================
     // SECURITY FILTER CHAIN
     // =========================================================
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
 
         http
 
-                // Disable CSRF because JWT is being used
+                // JWT නිසා CSRF disable
                 .csrf(csrf -> csrf.disable())
 
 
-                // JWT is stateless
+                // JWT Stateless
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
@@ -82,69 +86,105 @@ public class SecurityConfig {
                 )
 
 
-                // Authorization rules
+                // =================================================
+                // AUTHORIZATION
+                // =================================================
+
                 .authorizeHttpRequests(auth -> auth
 
-                        // =====================================
-                        // PUBLIC ENDPOINTS
-                        // =====================================
+                        // -----------------------------------------
+                        // PUBLIC FRONTEND PAGES
+                        // -----------------------------------------
+
                         .requestMatchers(
-                                "/api/auth/**",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**",
                                 "/",
                                 "/login",
                                 "/register",
                                 "/dresses",
+                                "/admin-dashboard",
+
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
                                 "/favicon.ico"
                         ).permitAll()
 
 
-                        // =====================================
-                        // ADMIN ONLY
-                        // =====================================
+                        // -----------------------------------------
+                        // PUBLIC AUTH API
+                        // -----------------------------------------
+
+                        .requestMatchers("/api/auth/**")
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // ADMIN API
+                        // -----------------------------------------
+
                         .requestMatchers("/api/admin/**")
                         .hasAuthority("ADMIN")
 
 
-                        // =====================================
-                        // USER + ADMIN
-                        // =====================================
+                        // -----------------------------------------
+                        // USER + ADMIN API
+                        // -----------------------------------------
+
                         .requestMatchers("/api/user/**")
                         .hasAnyAuthority("USER", "ADMIN")
 
 
-                        // =====================================
-                        // OTHER ENDPOINTS
-                        // =====================================
+                        // -----------------------------------------
+                        // OTHER REQUESTS
+                        // -----------------------------------------
+
                         .anyRequest()
                         .authenticated()
-
                 )
+
+
+                // =================================================
+                // UNAUTHORIZED RESPONSE
+                // =================================================
+
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
 
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                        .authenticationEntryPoint(
+                                (request, response, authException) -> {
 
-                            response.getWriter().write("""
-                    {
-                        "status": 1,
-                        "body": null,
-                        "message": "Authentication required"
-                    }
-                    """);
-                        })
+                                    response.setStatus(
+                                            HttpServletResponse.SC_UNAUTHORIZED
+                                    );
+
+                                    response.setContentType(
+                                            MediaType.APPLICATION_JSON_VALUE
+                                    );
+
+                                    response.getWriter().write("""
+                                            {
+                                                "status": 1,
+                                                "body": null,
+                                                "message": "Authentication required"
+                                            }
+                                            """);
+                                }
+                        )
                 )
 
-                // Authentication Provider
+
+                // =================================================
+                // AUTHENTICATION PROVIDER
+                // =================================================
+
                 .authenticationProvider(
                         authenticationProvider()
                 )
 
 
-                // JWT Authentication Filter
+                // =================================================
+                // JWT FILTER
+                // =================================================
+
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
@@ -154,4 +194,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-

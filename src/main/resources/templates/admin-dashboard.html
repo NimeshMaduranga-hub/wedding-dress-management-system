@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Admin Dashboard - Wedding Dress</title>
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
+    ```
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    ```
+    <div class="logo">
+        Wedding Dress
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+        <a href="/dresses">Dresses</a>
+
+        <span id="adminInfo"></span>
+
+        <button id="logoutBtn" type="button">
+            Logout
+        </button>
+
+    </div>
+    ```
+
+</nav>
+
+<section class="dashboard">
+
+    ```
+    <div class="dashboard-header">
+
+        <p class="small-title">
+            ADMIN PANEL
+        </p>
+
+        <h1>
+            Wedding Dress Dashboard
+        </h1>
+
+        <p>
+            Manage your wedding dress collection.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         ADD / UPDATE DRESS FORM
+    ========================================== -->
+
+    <div class="form-card">
+
+        <h2 id="formTitle">
+            Add New Wedding Dress
+        </h2>
+
+        <form id="dressForm">
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Dress Name
+                    </label>
+
+                    <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter dress name"
+                            required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Price
+                    </label>
+
+                    <input
+                            type="number"
+                            id="price"
+                            placeholder="Enter price"
+                            min="0.01"
+                            step="0.01"
+                            required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                        id="description"
+                        placeholder="Enter dress description"
+                        required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="size">
+                        Size
+                    </label>
+
+                    <input
+                            type="text"
+                            id="size"
+                            placeholder="Example: M"
+                            required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="color">
+                        Color
+                    </label>
+
+                    <input
+                            type="text"
+                            id="color"
+                            placeholder="Example: White"
+                            required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    Image URL
+                </label>
+
+                <input
+                        type="text"
+                        id="image"
+                        placeholder="Example: /images/dress1.jpg"
+                >
+
+            </div>
+
+
+            <div class="form-group checkbox-group">
+
+                <input
+                        type="checkbox"
+                        id="available"
+                        checked
+                >
+
+                <label for="available">
+                    Available
+                </label>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                        type="submit"
+                        class="add-btn"
+                        id="submitBtn"
+                >
+                    Add Dress
+                </button>
+
+                <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelBtn"
+                        style="display: none;"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+
+            <p id="message"></p>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         DRESS LIST
+    ========================================== -->
+
+    <div class="dress-list-card">
+
+        <div class="list-header">
+
+            <h2>
+                Wedding Dresses
+            </h2>
+
+            <button
+                    type="button"
+                    class="refresh-btn"
+                    id="refreshBtn"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+        <div id="dressContainer">
+
+            <p>
+                Loading dresses...
+            </p>
+
+        </div>
+
+    </div>
+    ```
+
+</section>
+
+<footer>
+
+    ```
+    <p>
+        © 2026 Wedding Dress System
+    </p>
+    ```
+
+</footer>
+
+<script src="/js/admin-dashboard.js"></script>
+
+</body>
+</html>
