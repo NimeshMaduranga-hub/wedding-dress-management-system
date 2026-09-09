@@ -2,6 +2,7 @@ package lk.ijse.wedding_dress.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "dress_inventory")
@@ -15,6 +16,7 @@ public class DressInventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dress_id", nullable = false, unique = true)
     private WeddingDress dress;

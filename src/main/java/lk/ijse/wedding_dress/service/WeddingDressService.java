@@ -1,20 +1,63 @@
 package lk.ijse.wedding_dress.service;
 
-import lk.ijse.wedding_dress.entity.WeddingDress;
+import lk.ijse.wedding_dress.dto.WeddingDressPatchDTO;
+import lk.ijse.wedding_dress.dto.WeddingDressRequestDTO;
+import lk.ijse.wedding_dress.dto.WeddingDressResponseDTO;
 
 import java.util.List;
 
 public interface WeddingDressService {
 
-    WeddingDress saveDress(WeddingDress weddingDress);
+    // =====================================================
+    // SAVE
+    // =====================================================
 
-    List<WeddingDress> getAllDresses();
+    WeddingDressResponseDTO saveDress(
+            WeddingDressRequestDTO requestDTO
+    );
 
-    WeddingDress getDressById(Long id);
 
-    WeddingDress updateDress(Long id, WeddingDress weddingDress);
+    // =====================================================
+    // GET ALL
+    // =====================================================
 
-    WeddingDress patchDress(Long id, WeddingDress weddingDress);
+    List<WeddingDressResponseDTO> getAllDresses();
 
-    void deleteDress(Long id);
+
+    // =====================================================
+    // GET BY ID
+    // =====================================================
+
+    WeddingDressResponseDTO getDressById(
+            Long id
+    );
+
+
+    // =====================================================
+    // PUT - FULL UPDATE
+    // =====================================================
+
+    WeddingDressResponseDTO updateDress(
+            Long id,
+            WeddingDressRequestDTO requestDTO
+    );
+
+
+    // =====================================================
+    // PATCH - PARTIAL UPDATE
+    // =====================================================
+
+    WeddingDressResponseDTO patchDress(
+            Long id,
+            WeddingDressPatchDTO patchDTO
+    );
+
+
+    // =====================================================
+    // DELETE
+    // =====================================================
+
+    void deleteDress(
+            Long id
+    );
 }

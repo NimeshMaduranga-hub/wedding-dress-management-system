@@ -1,9 +1,12 @@
 package lk.ijse.wedding_dress.controller;
 
 import jakarta.validation.Valid;
-import lk.ijse.wedding_dress.entity.WeddingDress;
+import lk.ijse.wedding_dress.dto.WeddingDressPatchDTO;
+import lk.ijse.wedding_dress.dto.WeddingDressRequestDTO;
+import lk.ijse.wedding_dress.dto.WeddingDressResponseDTO;
 import lk.ijse.wedding_dress.service.WeddingDressService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,92 +21,124 @@ public class WeddingDressController {
     private final WeddingDressService weddingDressService;
 
 
-    // =========================================================
+    // =====================================================
     // GET ALL DRESSES
-    // USER + ADMIN
-    // =========================================================
+    // =====================================================
+
     @GetMapping
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public ResponseEntity<List<WeddingDress>> getAllDresses() {
+    public ResponseEntity<List<WeddingDressResponseDTO>> getAllDresses() {
 
-        return ResponseEntity.ok(
-                weddingDressService.getAllDresses()
-        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        weddingDressService.getAllDresses()
+                );
     }
 
 
-    // =========================================================
+    // =====================================================
     // GET DRESS BY ID
-    // USER + ADMIN
-    // =========================================================
+    // =====================================================
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public ResponseEntity<WeddingDress> getDressById(
+    public ResponseEntity<WeddingDressResponseDTO> getDressById(
             @PathVariable Long id) {
 
-        return ResponseEntity.ok(
-                weddingDressService.getDressById(id)
-        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        weddingDressService.getDressById(id)
+                );
     }
 
 
-    // =========================================================
-    // ADD DRESS
-    // ADMIN ONLY
-    // =========================================================
+    // =====================================================
+    // POST - SAVE DRESS
+    // =====================================================
+
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<WeddingDress> saveDress(
-            @Valid @RequestBody WeddingDress dress) {
+    public ResponseEntity<WeddingDressResponseDTO> saveDress(
+            @Valid @RequestBody WeddingDressRequestDTO requestDTO) {
 
-        return ResponseEntity.ok(
-                weddingDressService.saveDress(dress)
-        );
+        WeddingDressResponseDTO savedDress =
+                weddingDressService.saveDress(
+                        requestDTO
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                        savedDress
+                );
     }
 
 
-    // =========================================================
-    // UPDATE DRESS
-    // ADMIN ONLY
-    // =========================================================
+    // =====================================================
+    // PUT - UPDATE DRESS
+    // =====================================================
+
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<WeddingDress> updateDress(
+    public ResponseEntity<WeddingDressResponseDTO> updateDress(
             @PathVariable Long id,
-            @Valid @RequestBody WeddingDress dress) {
+            @Valid @RequestBody WeddingDressRequestDTO requestDTO) {
 
-        return ResponseEntity.ok(
-                weddingDressService.updateDress(id, dress)
-        );
+        WeddingDressResponseDTO updatedDress =
+                weddingDressService.updateDress(
+                        id,
+                        requestDTO
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        updatedDress
+                );
     }
 
 
-    // =========================================================
+    // =====================================================
     // DELETE DRESS
-    // ADMIN ONLY
-    // =========================================================
+    // =====================================================
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteDress(
             @PathVariable Long id) {
 
-        weddingDressService.deleteDress(id);
+        weddingDressService.deleteDress(
+                id
+        );
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
-    // =========================================================
-// PATCH DRESS
-// ADMIN ONLY
-// =========================================================
+
+    // =====================================================
+    // PATCH - PARTIAL UPDATE
+    // =====================================================
+
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<WeddingDress> patchDress(
+    public ResponseEntity<WeddingDressResponseDTO> patchDress(
             @PathVariable Long id,
-            @RequestBody WeddingDress dress) {
+            @Valid @RequestBody WeddingDressPatchDTO patchDTO) {
 
-        return ResponseEntity.ok(
-                weddingDressService.patchDress(id, dress)
-        );
+        WeddingDressResponseDTO patchedDress =
+                weddingDressService.patchDress(
+                        id,
+                        patchDTO
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        patchedDress
+                );
     }
 }
